@@ -1,18 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WishList.Data;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace WishList
 {
     public class Program
     {
+        #region Methods
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
@@ -20,7 +25,6 @@ namespace WishList
             CreateDbIfNotExists(host);
 
             host.Run();
-
         }
 
         private static void CreateDbIfNotExists(IHost host)
@@ -41,16 +45,6 @@ namespace WishList
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        #endregion Methods
     }
 }
-
-//TODO Add an Edit page to Wishes
-//TODO Add a Details page to Wishes
-//TODO Make Wisher a dropdown on the Create & Edit Wish pages
-

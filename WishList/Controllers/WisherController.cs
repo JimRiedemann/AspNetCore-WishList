@@ -10,64 +10,22 @@ namespace WishList.Controllers
 {
     public class WisherController : Controller
     {
+        #region Fields
+
         private readonly AppDbContext _context;
+
+        #endregion Fields
+
+        #region Constructors
 
         public WisherController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Wishers
-        public async Task<IActionResult> Index(string sortOrder)
-        {
-            ViewData["NameSortParm"] = IsNullOrEmpty(sortOrder) ? "NameDesc" : "";
-            ViewData["BirthDateSortParm"] = sortOrder == "BirthDate" ? "BirthDateDesc" : "BirthDate";
-            ViewData["WishesSortParm"] = sortOrder == "Wishes" ? "WishesDesc" : "Wishes";
+        #endregion Constructors
 
-            var wishers = from w in _context.Wishers
-                select w;
-            switch (sortOrder)
-            {
-                case "NameDesc":
-                    wishers = wishers.OrderByDescending(w => w.Name);
-                    break;
-                case "BirthDate":
-                    wishers = wishers.OrderBy(w => w.BirthDate);
-                    break;
-                case "BirthDateDesc":
-                    wishers = wishers.OrderByDescending(w => w.BirthDate);
-                    break;
-                case "Wishes":
-                    wishers = wishers.OrderBy(w => w.WishesMade.Count).ThenBy(w => w.Name);
-                    break;
-                case "WishesDesc":
-                    wishers = wishers.OrderByDescending(w => w.WishesMade.Count).ThenByDescending(w => w.Name);
-                    break;
-                default:
-                    wishers = wishers.OrderBy(w => w.Name);
-                    break;
-            }
-            return View(await wishers.Include("WishesMade").ToListAsync());
-
-        }
-
-        // GET: Wishers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var wisher = await _context.Wishers
-                .FirstOrDefaultAsync(m => m.WisherId == id);
-            if (wisher == null)
-            {
-                return NotFound();
-            }
-
-            return View(wisher);
-        }
+        #region Methods
 
         // GET: Wishers/Create
         public IActionResult Create()
@@ -88,6 +46,53 @@ namespace WishList.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            return View(wisher);
+        }
+
+        // GET: Wishers/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var wisher = await _context.Wishers
+                .FirstOrDefaultAsync(m => m.WisherId == id);
+            if (wisher == null)
+            {
+                return NotFound();
+            }
+
+            return View(wisher);
+        }
+
+        // POST: Wishers/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var wisher = await _context.Wishers.FindAsync(id);
+            _context.Wishers.Remove(wisher);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Wishers/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var wisher = await _context.Wishers
+                .FirstOrDefaultAsync(m => m.WisherId == id);
+            if (wisher == null)
+            {
+                return NotFound();
+            }
+
             return View(wisher);
         }
 
@@ -142,38 +147,49 @@ namespace WishList.Controllers
             return View(wisher);
         }
 
-        // GET: Wishers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Wishers
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            if (id == null)
+            ViewData["NameSortParm"] = IsNullOrEmpty(sortOrder) ? "NameDesc" : "";
+            ViewData["BirthDateSortParm"] = sortOrder == "BirthDate" ? "BirthDateDesc" : "BirthDate";
+            ViewData["WishesSortParm"] = sortOrder == "Wishes" ? "WishesDesc" : "Wishes";
+
+            var wishers = from w in _context.Wishers
+                          select w;
+            switch (sortOrder)
             {
-                return NotFound();
+                case "NameDesc":
+                    wishers = wishers.OrderByDescending(w => w.Name);
+                    break;
+
+                case "BirthDate":
+                    wishers = wishers.OrderBy(w => w.BirthDate);
+                    break;
+
+                case "BirthDateDesc":
+                    wishers = wishers.OrderByDescending(w => w.BirthDate);
+                    break;
+
+                case "Wishes":
+                    wishers = wishers.OrderBy(w => w.WishesMade.Count).ThenBy(w => w.Name);
+                    break;
+
+                case "WishesDesc":
+                    wishers = wishers.OrderByDescending(w => w.WishesMade.Count).ThenByDescending(w => w.Name);
+                    break;
+
+                default:
+                    wishers = wishers.OrderBy(w => w.Name);
+                    break;
             }
-
-            var wisher = await _context.Wishers
-                .FirstOrDefaultAsync(m => m.WisherId == id);
-            if (wisher == null)
-            {
-                return NotFound();
-            }
-
-            return View(wisher);
-        }
-
-        // POST: Wishers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var wisher = await _context.Wishers.FindAsync(id);
-            _context.Wishers.Remove(wisher);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View(await wishers.Include("WishesMade").ToListAsync());
         }
 
         private bool WisherExists(int id)
         {
             return _context.Wishers.Any(e => e.WisherId == id);
         }
+
+        #endregion Methods
     }
 }

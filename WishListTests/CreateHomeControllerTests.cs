@@ -7,8 +7,10 @@ namespace WishListTests
 {
     public class CreateHomeControllerTests
     {
-        [Fact(DisplayName = "Create the HomeController @create-the-homecontroller")]
-        public void CreateHomeControllerTest()
+        #region Methods
+
+        [Fact(DisplayName = "Create the HomeController's Error Action @create-homecontrollers-error-action")]
+        public void CreateHomeControllersErrorActionTest()
         {
             // Get appropriate path to file for the current operating system
             var filePath = ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "WishList" + Path.DirectorySeparatorChar + "Controllers" + Path.DirectorySeparatorChar + "HomeController.cs";
@@ -19,6 +21,14 @@ namespace WishListTests
 
             Assert.True(controllerType != null, "`HomeController.cs` was found, but does not appear to contain a `public` `HomeController` class.");
             Assert.True(controllerType.BaseType == typeof(Controller), "`HomeController` was found, but is not inheriting the `Controller` class. (you will need a using directive for `Microsoft.AspNetCore.Mvc`)");
+
+            var controller = Activator.CreateInstance(controllerType);
+            var method = controllerType.GetMethod("Error");
+            Assert.True(method != null, "`HomeController` was found, but does not appear to contain a `public` `Error` action.");
+            Assert.True(method.ReturnType == typeof(IActionResult), "`HomeController.Error` was found, but did not have a return type of `IActionResult`.");
+
+            var result = (ViewResult)method.Invoke(controller, null);
+            Assert.True(result.ViewName == "Error", "`HomeController.Error` did not explicitly return the `Error` view.");
         }
 
         [Fact(DisplayName = "Create the HomeController's Index Action @create-homecontrollers-index-action")]
@@ -43,8 +53,8 @@ namespace WishListTests
             Assert.True(result.ViewName == "Index", "`HomeController.Index` did not explicitly return the `Index` view.");
         }
 
-        [Fact(DisplayName = "Create the HomeController's Error Action @create-homecontrollers-error-action")]
-        public void CreateHomeControllersErrorActionTest()
+        [Fact(DisplayName = "Create the HomeController @create-the-homecontroller")]
+        public void CreateHomeControllerTest()
         {
             // Get appropriate path to file for the current operating system
             var filePath = ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "WishList" + Path.DirectorySeparatorChar + "Controllers" + Path.DirectorySeparatorChar + "HomeController.cs";
@@ -55,14 +65,8 @@ namespace WishListTests
 
             Assert.True(controllerType != null, "`HomeController.cs` was found, but does not appear to contain a `public` `HomeController` class.");
             Assert.True(controllerType.BaseType == typeof(Controller), "`HomeController` was found, but is not inheriting the `Controller` class. (you will need a using directive for `Microsoft.AspNetCore.Mvc`)");
-
-            var controller = Activator.CreateInstance(controllerType);
-            var method = controllerType.GetMethod("Error");
-            Assert.True(method != null, "`HomeController` was found, but does not appear to contain a `public` `Error` action.");
-            Assert.True(method.ReturnType == typeof(IActionResult), "`HomeController.Error` was found, but did not have a return type of `IActionResult`.");
-
-            var result = (ViewResult)method.Invoke(controller, null);
-            Assert.True(result.ViewName == "Error", "`HomeController.Error` did not explicitly return the `Error` view.");
         }
+
+        #endregion Methods
     }
 }

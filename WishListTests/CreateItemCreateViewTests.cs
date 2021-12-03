@@ -6,6 +6,8 @@ namespace WishListTests
 {
     public class CreateItemCreateViewTests
     {
+        #region Methods
+
         [Fact(DisplayName = "Create Create View @create-create-view")]
         public void CreateCreateView()
         {
@@ -38,5 +40,7 @@ namespace WishListTests
             rgx = new Regex(pattern);
             Assert.True(rgx.IsMatch(file), @"`Create.cshtml` was found, but does not appear to contain a `form` containing an `button` tag with an attribute `type` set to `submit` with the text '""Add item""'.");
         }
+
+        #endregion Methods
     }
 }

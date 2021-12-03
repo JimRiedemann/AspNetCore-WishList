@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 using WishList.Models;
-using WishList.Data;
 
 namespace WishList.Data
 {
     public static class DbInitializer
     {
+        #region Methods
+
         public static void Initialize(AppDbContext context)
         {
             context.Database.EnsureCreated();
@@ -54,5 +55,7 @@ namespace WishList.Data
 
             context.SaveChangesWithIdentityInsert<Wish>();
         }
+
+        #endregion Methods
     }
 }

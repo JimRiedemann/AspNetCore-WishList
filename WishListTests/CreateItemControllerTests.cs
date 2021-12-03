@@ -10,6 +10,8 @@ namespace WishListTests
 {
     public class CreateItemControllerTests
     {
+        #region Methods
+
         [Fact(DisplayName = "Create WishController @create-itemcontroller")]
         public void CreateItemControllerTest()
         {
@@ -44,35 +46,6 @@ namespace WishListTests
             var pattern = @"public\s*WishController\s*?[(]\s*?ApplicationDbContext\s*context\s*?[)]\s*?{\s*?_context\s*?=\s*?context\s*?;\s*?}";
             var rgx = new Regex(pattern);
             Assert.True(rgx.IsMatch(file), "`WishController`'s constructor did not set the `_context` property to the provided `ApplicationDbContext` parameter.");
-        }
-
-        [Fact(DisplayName = "Create Item Index Action @create-item-index-action")]
-        public void CreateItemIndexActionTest()
-        {
-            // Get appropriate path to file for the current operating system
-            var filePath = ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "WishList" + Path.DirectorySeparatorChar + "Controllers" + Path.DirectorySeparatorChar + "WishController.cs";
-            // Assert Index.cshtml is in the Views/Home folder
-            Assert.True(File.Exists(filePath), "`WishController.cs` was not found in the `Controllers` folder.");
-
-            var controllerType = TestHelpers.GetUserType("WishList.Controllers.WishController");
-
-            Assert.True(controllerType != null, "`WishController.cs` was found, but it appears it does not contain a `public` class `WishController`.");
-
-            // Verify Index Action Exists
-            var method = controllerType.GetMethod("Index");
-            Assert.True(method != null, "`WishController` was found, but does not appear to contain an action `Index` with a return type of `IActionResult`.");
-
-            // Verify Index has the correct return type
-            Assert.True(method.ReturnType == typeof(IActionResult), "`WishController`'s `Index` action was found, but didn't have a return type of `IActionResult`.");
-
-            string file;
-            using (var streamReader = new StreamReader(filePath))
-            {
-                file = streamReader.ReadToEnd();
-            }
-            var pattern = @"public\s*IActionResult\s*Index\s*?[(]\s*?[)]\s*?{\s*?((var|List<Item>).*=\s*?_context.Items(;\s*?return\s*View[(](""Index"",)?.*[.]ToList[(]\s*?[)]\s*?[)];|[.]ToList[(]\s*?[)]\s*?;\s*?return\s*View\s*?[(]\s*?(""Index"",)?.*[)];)|return\s*View\s*?[(]\s*?(""Index"",)?\s*?_context[.]Items[.]ToList[(]\s*?[)]\s*?[)]\s*?[;])\s*?}";
-            var rgx = new Regex(pattern);
-            Assert.True(rgx.IsMatch(file), "`WishController`'s `Index` action does not appear to be getting all `Item`s from `_context.Items` converting it to type `List<Item>` and returning it as the model for the 'Index' view.");
         }
 
         [Fact(DisplayName = "Create Item Create HttpGet Action @create-item-create-httpget-action")]
@@ -179,5 +152,36 @@ namespace WishListTests
             var rgx = new Regex(pattern);
             Assert.True(rgx.IsMatch(file), "`WishController`'s `Delete` action does not appear to be removing the `Item` with the matching `Id` to the one provided from `_context.Items`, `SaveChanges`, and then redirecting to the `Item`'s `Index` action.");
         }
+
+        [Fact(DisplayName = "Create Item Index Action @create-item-index-action")]
+        public void CreateItemIndexActionTest()
+        {
+            // Get appropriate path to file for the current operating system
+            var filePath = ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "WishList" + Path.DirectorySeparatorChar + "Controllers" + Path.DirectorySeparatorChar + "WishController.cs";
+            // Assert Index.cshtml is in the Views/Home folder
+            Assert.True(File.Exists(filePath), "`WishController.cs` was not found in the `Controllers` folder.");
+
+            var controllerType = TestHelpers.GetUserType("WishList.Controllers.WishController");
+
+            Assert.True(controllerType != null, "`WishController.cs` was found, but it appears it does not contain a `public` class `WishController`.");
+
+            // Verify Index Action Exists
+            var method = controllerType.GetMethod("Index");
+            Assert.True(method != null, "`WishController` was found, but does not appear to contain an action `Index` with a return type of `IActionResult`.");
+
+            // Verify Index has the correct return type
+            Assert.True(method.ReturnType == typeof(IActionResult), "`WishController`'s `Index` action was found, but didn't have a return type of `IActionResult`.");
+
+            string file;
+            using (var streamReader = new StreamReader(filePath))
+            {
+                file = streamReader.ReadToEnd();
+            }
+            var pattern = @"public\s*IActionResult\s*Index\s*?[(]\s*?[)]\s*?{\s*?((var|List<Item>).*=\s*?_context.Items(;\s*?return\s*View[(](""Index"",)?.*[.]ToList[(]\s*?[)]\s*?[)];|[.]ToList[(]\s*?[)]\s*?;\s*?return\s*View\s*?[(]\s*?(""Index"",)?.*[)];)|return\s*View\s*?[(]\s*?(""Index"",)?\s*?_context[.]Items[.]ToList[(]\s*?[)]\s*?[)]\s*?[;])\s*?}";
+            var rgx = new Regex(pattern);
+            Assert.True(rgx.IsMatch(file), "`WishController`'s `Index` action does not appear to be getting all `Item`s from `_context.Items` converting it to type `List<Item>` and returning it as the model for the 'Index' view.");
+        }
+
+        #endregion Methods
     }
 }

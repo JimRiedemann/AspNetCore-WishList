@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WishList.Models;
-
-namespace WishList.Data
+﻿namespace WishList.Data
 {
     public static class Common
     {
+        #region Fields
+
         private static IAppDbRepository _commonRepository;
+
+        #endregion Fields
 
         //public static string GetWisherName(int wisherId)
         //{
@@ -16,9 +14,5 @@ namespace WishList.Data
         //        wishers.
         //        return wisherData;
         //}
-
-
-
-
     }
 }

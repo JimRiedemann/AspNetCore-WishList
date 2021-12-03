@@ -8,20 +8,24 @@ namespace WishList.Models
     [Table("Wishers")]
     public class Wisher
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int WisherId { get; set; }
+        #region Properties
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Birthday")]
+        public DateTime BirthDate { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(50)")]
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Birthday")]
-        public DateTime BirthDate { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int WisherId { get; set; }
 
-        [Display(Name = "Wishes Made")] 
+        [Display(Name = "Wishes Made")]
         public ICollection<Wish> WishesMade { get; set; }
+
+        #endregion Properties
     }
 }

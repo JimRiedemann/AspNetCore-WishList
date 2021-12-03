@@ -5,6 +5,8 @@ namespace WishListTests
 {
     public class AddEntityFrameworkSupportTests
     {
+        #region Methods
+
         [Fact(DisplayName = "Configure EntityFramework @configure-entityframework")]
         public void ConfigureEntityFrameworkTest()
         {
@@ -18,5 +20,7 @@ namespace WishListTests
             Assert.True(file.Contains("services.AddDbContext<ApplicationDbContext>"), "`Startup.cs`'s `Configure` did not contain a call to `ApplicationDbContext` with the `ApplicationDbContext` type.");
             Assert.True(file.Contains(@"options => options.UseInMemoryDatabase"), @"`Startup.cs`'s `Configure` called `AddDbContext` but did not provide it the argument `options => options.UseInMemoryDatabase(""WishList"")`.");
         }
+
+        #endregion Methods
     }
 }

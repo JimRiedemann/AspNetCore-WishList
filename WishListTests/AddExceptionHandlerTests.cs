@@ -5,6 +5,8 @@ namespace WishListTests
 {
     public class AddExceptionHandlerTests
     {
+        #region Methods
+
         [Fact(DisplayName = "Configure Exception Handling @configure-exception-handling")]
         public void UseDeveloperExceptionPageTest()
         {
@@ -18,5 +20,7 @@ namespace WishListTests
             Assert.True(file.Contains("app.UseDeveloperExceptionPage();"), "`Startup.cs`'s `Configure` did not contain a call to `UseDeveloperExceptionPage`.");
             Assert.True(file.Contains(@"app.UseExceptionHandler(""/Home/Error"")"), "`Startup.cs`'s `Configure` did not contain a call to `UseExceptionHandler` that redirects to the `Home.Error` action.");
         }
+
+        #endregion Methods
     }
 }

@@ -1,18 +1,26 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WishList.Models;
 
 namespace WishList.Data
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
+        #region Constructors
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
 
-        public virtual DbSet<Wish> Wishes { get; set; }
+        #endregion Constructors
+
+        #region Properties
 
         public virtual DbSet<Wisher> Wishers { get; set; }
+        public virtual DbSet<Wish> Wishes { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,6 +32,7 @@ namespace WishList.Data
             modelBuilder.Entity<Wish>().ToTable("Wishes");
             modelBuilder.Entity<Wisher>().ToTable("Wishers");
         }
+
+        #endregion Methods
     }
 }
-

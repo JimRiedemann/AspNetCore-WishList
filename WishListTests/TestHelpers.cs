@@ -5,7 +5,13 @@ namespace WishListTests
 {
     public static class TestHelpers
     {
+        #region Fields
+
         private static readonly string _projectName = "WishList";
+
+        #endregion Fields
+
+        #region Methods
 
         public static Type GetUserType(string fullName)
         {
@@ -15,5 +21,7 @@ namespace WishListTests
                     where type.FullName == fullName
                     select type).FirstOrDefault();
         }
+
+        #endregion Methods
     }
 }
