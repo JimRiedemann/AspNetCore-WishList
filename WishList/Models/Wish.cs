@@ -8,24 +8,24 @@ namespace WishList.Models
     {
         #region Properties
 
-        [Required]
-        [Column(TypeName = "varchar(50)")]
-        [MaxLength(50)]
-        public string Description { get; set; }
-
-        [Display(Name = "Wish Maker")]
-        public Wisher Wisher { get; set; }
-
-        [Required]
-        public int WisherId { get; set; }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WishId { get; set; }
 
         [Required]
+        public int WisherId { get; set; }
+
+        [Display(Name = "Wish Maker")]
+        public Wisher Wisher { get; set; }
+
+        [Required]
         [Display(Name = "Wish Order")]
         public int WishOrder { get; set; }
+
+        [Required]
+        [Column(TypeName = "varchar(50)")]
+        [MaxLength(50)]
+        public string Description { get; set; }
 
         #endregion Properties
     }

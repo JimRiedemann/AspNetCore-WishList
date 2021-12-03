@@ -3,7 +3,7 @@ using WishList.Models;
 
 namespace WishList.Data
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class AppDbContext : DbContext
     {
         #region Constructors
 
@@ -16,6 +16,7 @@ namespace WishList.Data
         #region Properties
 
         public virtual DbSet<Wisher> Wishers { get; set; }
+
         public virtual DbSet<Wish> Wishes { get; set; }
 
         #endregion Properties
