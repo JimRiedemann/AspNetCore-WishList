@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WishList.Models.Wisher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Wish Makers</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["BirthDateSortParm"]">@Html.DisplayNameFor(model => model.BirthDate)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["WishesSortParm"]"># of Wishes Made</a>
+</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WishesMade.Count)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.WisherId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.WisherId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.WisherId">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

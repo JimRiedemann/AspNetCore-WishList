@@ -49,7 +49,7 @@ namespace WishListTests
             }
             var pattern = @"(?i)<\s*?a\s*asp-action\s*?=\s*?""index""\s*asp-controller\s*?=\s*?""item""\s*?>\s*?view wishlist\s*?<[/]\s*?a\s*?>";
             var rgx = new Regex(pattern);
-            Assert.True(rgx.IsMatch(file), "`Index.cshtml` was found, but does not appear to contain link to the `ItemController.Index` action. (use the `asp-action` and `asp-controller` tag helpers)");
+            Assert.True(rgx.IsMatch(file), "`Index.cshtml` was found, but does not appear to contain link to the `WishController.Index` action. (use the `asp-action` and `asp-controller` tag helpers)");
         }
     }
 }

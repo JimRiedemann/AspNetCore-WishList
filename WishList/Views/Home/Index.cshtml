@@ -1,3 +1,27 @@
-﻿
-<h1>Welcome!</h1>
-<a asp-action="Index" asp-controller="Item">View WishList</a>
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Wish List</h1>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Welcome to Jim's Little Wish List</h2>
+        <p>
+            Wish List is a sample application that
+            demonstrates how to use Entity Framework Core in an
+            ASP.NET Core MVC web application.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Register Yourself</h2>
+        <p>You can add yourself to the list of people who have wishes.</p>
+        <p><a class="btn btn-default" href="https://localhost:44355/Wisher">Become a Wish Maker &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Make a Wish</h2>
+        <p>Once registered, you can add your wish or wishes to the list.</p>
+        <p><a class="btn btn-default" href="https://localhost:44355/Wishes">Make a Wish &raquo;</a></p>
+    </div>
+</div>

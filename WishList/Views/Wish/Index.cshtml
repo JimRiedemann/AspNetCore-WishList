@@ -1,0 +1,54 @@
+﻿@using WishList.Data
+@using WishList.Models
+
+@model IEnumerable<Wish>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Wish List</h1>
+
+<p>
+    <a asp-action="Create">Add Wish</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Wisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WishOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var wish in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => wish.Wisher.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => wish.WishOrder)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => wish.Description)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@wish.WishId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@wish.WishId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@wish.WishId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
